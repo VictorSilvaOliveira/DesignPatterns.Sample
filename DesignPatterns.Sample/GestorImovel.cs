@@ -12,8 +12,9 @@ namespace DesignPatterns.Sample
         private string _cartao;
         private readonly IEnumerable<BaseProvedor> _provedores;
         private readonly IEnumerable<IPlano> _planos;
+        private readonly IHttpClient _httpClient;
 
-        public GestorImovel(string nomeDoImovel, decimal valor, uint quartos, string cartao, string plano, IEnumerable<BaseProvedor> provedores, IEnumerable<IPlano> planos)
+        public GestorImovel(string nomeDoImovel, decimal valor, uint quartos, string cartao, string plano, IEnumerable<BaseProvedor> provedores, IEnumerable<IPlano> planos, IHttpClient httpClient)
         {
             _nomeDoImovel = nomeDoImovel;
             _valor = valor;
@@ -22,6 +23,7 @@ namespace DesignPatterns.Sample
             _cartao = cartao;
             _provedores = provedores;
             _planos = planos;
+            _httpClient = httpClient;
         }
 
         public void PublicaEmProvedores()
@@ -42,11 +44,10 @@ namespace DesignPatterns.Sample
                 .First(p => p.Tipo == _plano)
                 .CalculaValor(qtdDiaria, _valor);
 
-            httpClient.PostAsync("gateway-pagamento", GenerateBody(new
-            {
+            _httpClient.Post("gateway-pagamento", new {
                 cartao = _cartao,
                 Valor = valorPlano,
-            }));
+            });
 
         }
 

@@ -12,6 +12,8 @@ namespace DesignerPatterns.Test
         {
             var x = new Moq.Mock<BaseProvedor>();
 
+            var httpClient = new Moq.Mock<IHttpClient>();
+
             var planos = new List<IPlano>
             {
                 new Basico(),
@@ -19,10 +21,10 @@ namespace DesignerPatterns.Test
                 new Avancado()
             };
 
-            var gestorImovel = new GestorImovel("Meu imovel", 100M, 3, "1231231-123123-123213", "Intermediário", new List<BaseProvedor>() { x.Object }, planos);
+            var gestorImovel = new GestorImovel("Meu imovel", 100M, 3, "1231231-123123-123213", "Intermediário", new List<BaseProvedor>() { x.Object }, planos, httpClient.Object);
 
             gestorImovel.PublicaEmProvedores();
-
+            httpClient.Invocations.Count.Equals(0);
             x.Invocations.Count.Equals(1);
         }
 
@@ -30,7 +32,7 @@ namespace DesignerPatterns.Test
         public void GestorImovel_CobraPlano()
         {
             var x = new Moq.Mock<BaseProvedor>();
-
+            var httpClient = new Moq.Mock<IHttpClient>();
             var planos = new List<IPlano>
             {
                 new Basico(),
@@ -38,10 +40,10 @@ namespace DesignerPatterns.Test
                 new Avancado()
             };
 
-            var gestorImovel = new GestorImovel("Meu imovel", 100M, 3, "1231231-123123-123213", "Intermediário", new List<BaseProvedor>() { x.Object }, planos);
+            var gestorImovel = new GestorImovel("Meu imovel", 100M, 3, "1231231-123123-123213", "Intermediário", new List<BaseProvedor>() { x.Object }, planos, httpClient.Object);
 
             gestorImovel.CobraPlano(4);
-
+            httpClient.Invocations.Count.Equals(1);
             x.Invocations.Count.Equals(0);
         }
     }
