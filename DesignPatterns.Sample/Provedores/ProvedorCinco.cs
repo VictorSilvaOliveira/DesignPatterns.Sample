@@ -26,6 +26,7 @@ namespace DesignPatterns.Sample.Provedores
             localFile["Nome"] = imovel.Nome;
             localFile["Valor"] = imovel.Valor.ToString();
             localFile["Quartos"] = imovel.Quartos.ToString();
+            localFile["Endereco"] = imovel.Endereco.ToString();
             using (var client = new WebClient())
             {
                 client.Credentials = new NetworkCredential(_username, _Password);

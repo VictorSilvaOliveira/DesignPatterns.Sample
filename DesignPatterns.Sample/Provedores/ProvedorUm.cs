@@ -20,7 +20,8 @@ namespace DesignPatterns.Sample.Provedores
             {
                 QtdQuartos = imovel.Quartos,
                 Diaria = imovel.Valor,
-                Descricao = imovel.Nome
+                Descricao = imovel.Nome,
+                Contato = imovel.Contato
             });
         }
 

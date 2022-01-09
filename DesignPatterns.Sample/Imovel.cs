@@ -13,5 +13,7 @@ namespace DesignPatterns.Sample
         public uint Quartos { get; set; }
         public string Plano { get; set; }
         public string Cartao { get; set; }
+        public string Contato { get; set; }
+        public string Endereco { get; set; }
     }
 }
