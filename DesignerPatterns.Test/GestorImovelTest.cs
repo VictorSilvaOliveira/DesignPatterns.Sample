@@ -1,4 +1,5 @@
 using DesignPatterns.Sample;
+using DesignPatterns.Sample.Planos;
 using System.Collections.Generic;
 using Xunit;
 
@@ -11,7 +12,14 @@ namespace DesignerPatterns.Test
         {
             var x = new Moq.Mock<BaseProvedor>();
 
-            var gestorImovel = new GestorImovel("Meu imovel", 100M, 3, "1231231-123123-123213", "Intermediario", new List<BaseProvedor>() { x.Object });
+            var planos = new List<IPlano>
+            {
+                new Basico(),
+                new Intermediario(),
+                new Avancado()
+            };
+
+            var gestorImovel = new GestorImovel("Meu imovel", 100M, 3, "1231231-123123-123213", "Intermediário", new List<BaseProvedor>() { x.Object }, planos);
 
             gestorImovel.PublicaEmProvedores();
 
@@ -23,7 +31,14 @@ namespace DesignerPatterns.Test
         {
             var x = new Moq.Mock<BaseProvedor>();
 
-            var gestorImovel = new GestorImovel("Meu imovel", 100M, 3, "1231231-123123-123213", "Intermediario", new List<BaseProvedor>() { x.Object });
+            var planos = new List<IPlano>
+            {
+                new Basico(),
+                new Intermediario(),
+                new Avancado()
+            };
+
+            var gestorImovel = new GestorImovel("Meu imovel", 100M, 3, "1231231-123123-123213", "Intermediário", new List<BaseProvedor>() { x.Object }, planos);
 
             gestorImovel.CobraPlano(4);
 

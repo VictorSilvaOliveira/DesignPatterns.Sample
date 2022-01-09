@@ -11,8 +11,9 @@ namespace DesignPatterns.Sample
         uint _quartos = 1;
         private string _cartao;
         private readonly IEnumerable<BaseProvedor> _provedores;
+        private readonly IEnumerable<IPlano> _planos;
 
-        public GestorImovel(string nomeDoImovel, decimal valor, uint quartos, string cartao, string plano, IEnumerable<BaseProvedor> provedores)
+        public GestorImovel(string nomeDoImovel, decimal valor, uint quartos, string cartao, string plano, IEnumerable<BaseProvedor> provedores, IEnumerable<IPlano> planos)
         {
             _nomeDoImovel = nomeDoImovel;
             _valor = valor;
@@ -20,6 +21,7 @@ namespace DesignPatterns.Sample
             _quartos = quartos;
             _cartao = cartao;
             _provedores = provedores;
+            _planos = planos;
         }
 
         public void PublicaEmProvedores()
@@ -33,22 +35,12 @@ namespace DesignPatterns.Sample
 
         public void CobraPlano(uint qtdDiaria)
         {
+
             HttpClient httpClient = new HttpClient();
 
-            var valorPlano = 0M;
-            switch (_plano)
-            {
-                case "Avançado":
-                    valorPlano = qtdDiaria * _valor * 0.15M;
-                    break;
-                case "Intermediário":
-                    valorPlano = qtdDiaria * _valor * 0.20M;
-                    break;
-                case "Basico":
-                default:
-                    valorPlano = qtdDiaria * _valor * 0.25M;
-                    break;
-            }
+            var valorPlano = _planos
+                .First(p => p.Tipo == _plano)
+                .CalculaValor(qtdDiaria, _valor);
 
             httpClient.PostAsync("gateway-pagamento", GenerateBody(new
             {
