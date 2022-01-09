@@ -8,8 +8,12 @@ using System.Threading.Tasks;
 
 namespace DesignPatterns.Sample.Provedores
 {
-    public class ProvedorQuatro : BaseProvedor
+    public class ProvedorQuatro : HttpProvedor, IProvedor
     {
+        public ProvedorQuatro(IHttpClient httpClient) : base(httpClient)
+        {
+        }
+
         public void Publica(string nomeDoImovel, decimal valor, uint quartos)
         {
             EnviaProvedor("provedor-quatro", new

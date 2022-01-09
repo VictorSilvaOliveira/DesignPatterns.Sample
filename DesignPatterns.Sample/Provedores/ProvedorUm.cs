@@ -8,9 +8,13 @@ using System.Threading.Tasks;
 
 namespace DesignPatterns.Sample.Provedores
 {
-    public class ProvedorUm : BaseProvedor
+    public class ProvedorUm : HttpProvedor, IProvedor
     {
-        public override void Publica(string nomeDoImovel, decimal valor, uint quartos)
+        public ProvedorUm(IHttpClient httpClient) : base(httpClient)
+        {
+        }
+
+        public void Publica(string nomeDoImovel, decimal valor, uint quartos)
         {
             EnviaProvedor("provedor-um", new
             {

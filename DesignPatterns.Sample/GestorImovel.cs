@@ -10,11 +10,11 @@ namespace DesignPatterns.Sample
         string _plano = string.Empty;
         uint _quartos = 1;
         private string _cartao;
-        private readonly IEnumerable<BaseProvedor> _provedores;
+        private readonly IEnumerable<IProvedor> _provedores;
         private readonly IEnumerable<IPlano> _planos;
         private readonly IHttpClient _httpClient;
 
-        public GestorImovel(string nomeDoImovel, decimal valor, uint quartos, string cartao, string plano, IEnumerable<BaseProvedor> provedores, IEnumerable<IPlano> planos, IHttpClient httpClient)
+        public GestorImovel(string nomeDoImovel, decimal valor, uint quartos, string cartao, string plano, IEnumerable<IProvedor> provedores, IEnumerable<IPlano> planos, IHttpClient httpClient)
         {
             _nomeDoImovel = nomeDoImovel;
             _valor = valor;
