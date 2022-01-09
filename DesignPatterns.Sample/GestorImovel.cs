@@ -10,47 +10,25 @@ namespace DesignPatterns.Sample
         string _plano = string.Empty;
         uint _quartos = 1;
         private string _cartao;
+        private readonly IEnumerable<BaseProvedor> _provedores;
 
-        public GestorImovel(string nomeDoImovel, decimal valor, uint quartos, string cartao, string plano)
+        public GestorImovel(string nomeDoImovel, decimal valor, uint quartos, string cartao, string plano, IEnumerable<BaseProvedor> provedores)
         {
             _nomeDoImovel = nomeDoImovel;
             _valor = valor;
             _plano = plano;
             _quartos = quartos;
             _cartao = cartao;
+            _provedores = provedores;
         }
 
         public void PublicaEmProvedores()
         {
-            HttpClient httpClient = new HttpClient();
-
-            httpClient.PostAsync("provedor-um", GenerateBody(new
+            foreach(var provedor in _provedores)
             {
-                QtdQuartos = _quartos,
-                Diaria = _valor,
-                Descricao = _nomeDoImovel
-            }));
-
-            httpClient.PostAsync("provedor-dois", GenerateBody(new
-            {
-                QtdRooms = _quartos,
-                UnitValue = _valor,
-                Description = _nomeDoImovel
-            }));
-
-            httpClient.PostAsync("provedor-tres", GenerateBody(new
-            {
-                Quatos = _quartos,
-                DiariaValor = _valor,
-                Nome = _nomeDoImovel
-            }));
-
-            httpClient.PostAsync("provedor-quatro", GenerateBody(new
-            {
-                Quartos = _quartos,
-                Valor = _valor,
-                Imovel = _nomeDoImovel
-            }));
+                provedor.Publica(_nomeDoImovel, _valor, _quartos);
+            }
+  
         }
 
         public void CobraPlano(uint qtdDiaria)
