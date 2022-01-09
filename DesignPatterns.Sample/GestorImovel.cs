@@ -28,11 +28,11 @@ namespace DesignPatterns.Sample
 
         public void PublicaEmProvedores()
         {
-            foreach(var provedor in _provedores)
+            foreach (var provedor in _provedores)
             {
                 provedor.Publica(_nomeDoImovel, _valor, _quartos);
             }
-  
+
         }
 
         public void CobraPlano(uint qtdDiaria)
@@ -44,23 +44,10 @@ namespace DesignPatterns.Sample
                 .First(p => p.Tipo == _plano)
                 .CalculaValor(qtdDiaria, _valor);
 
-            _httpClient.Post("gateway-pagamento", new {
-                cartao = _cartao,
-                Valor = valorPlano,
-            });
+            _httpClient.Post("gateway-pagamento", new Pagamento(_cartao, valorPlano));
 
         }
 
-        private ByteArrayContent GenerateBody(object rawBody)
-        {
-            var myContent = JsonSerializer.Serialize(rawBody, options: new JsonSerializerOptions()
-            {
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-            });
-            var buffer = System.Text.Encoding.UTF8.GetBytes(myContent);
-            var byteContent = new ByteArrayContent(buffer);
-            byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-            return byteContent;
-        }
+        
     }
 }
