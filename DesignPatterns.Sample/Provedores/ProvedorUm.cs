@@ -14,13 +14,13 @@ namespace DesignPatterns.Sample.Provedores
         {
         }
 
-        public void Publica(string nomeDoImovel, decimal valor, uint quartos)
+        public void Publica(Imovel imovel)
         {
             EnviaProvedor("provedor-um", new
             {
-                QtdQuartos = quartos,
-                Diaria = valor,
-                Descricao = nomeDoImovel
+                QtdQuartos = imovel.Quartos,
+                Diaria = imovel.Valor,
+                Descricao = imovel.Nome
             });
         }
 

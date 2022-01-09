@@ -2,6 +2,6 @@
 {
     public interface IProvedor
     {
-        void Publica(string nomeDoImovel, decimal valor, uint quartos);
+        void Publica(Imovel imovel);
     }
 }

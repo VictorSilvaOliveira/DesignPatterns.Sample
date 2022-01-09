@@ -21,8 +21,16 @@ namespace DesignerPatterns.Test
                 new Intermediario(),
                 new Avancado()
             };
+            var imovel = new Imovel()
+            {
+                Nome = "Meu imovel",
+                Valor = 100M,
+                Quartos = 3,
+                Cartao = "1231231-123123-123213",
+                Plano = "Intermediário"
+            };
 
-            var gestorImovel = new GestorImovel("Meu imovel", 100M, 3, "1231231-123123-123213", "Intermediário", new List<IProvedor>() { x.Object }, planos, httpClient.Object);
+            var gestorImovel = new GestorImovel(imovel, new List<IProvedor>() { x.Object }, planos, httpClient.Object);
 
             gestorImovel.PublicaEmProvedores();
             httpClient.Invocations.Count.Equals(0);
@@ -49,7 +57,16 @@ namespace DesignerPatterns.Test
                 planoIntermediario.Object
             };
 
-            var gestorImovel = new GestorImovel("Meu imovel", 100M, 3, "1231231-123123-123213", "Intermediário", new List<IProvedor>() { x.Object }, planos, httpClient.Object);
+            var imovel = new Imovel()
+            {
+                Nome = "Meu imovel",
+                Valor = 100M,
+                Quartos = 3,
+                Cartao = "1231231-123123-123213",
+                Plano = "Intermediário"
+            };
+
+            var gestorImovel = new GestorImovel(imovel, new List<IProvedor>() { x.Object }, planos, httpClient.Object);
 
             gestorImovel.CobraPlano(4);
             httpClient.Invocations.Count.Equals(1);

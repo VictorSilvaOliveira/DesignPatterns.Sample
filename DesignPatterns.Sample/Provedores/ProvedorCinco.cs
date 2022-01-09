@@ -19,13 +19,13 @@ namespace DesignPatterns.Sample.Provedores
             _Password = password;
         }
 
-        public void Publica(string nomeDoImovel, decimal valor, uint quartos)
+        public void Publica(Imovel imovel)
         {
 
             var localFile = new NameValueCollection();
-            localFile["Nome"] = nomeDoImovel;
-            localFile["Valor"] = valor.ToString();
-            localFile["Quartos"] = quartos.ToString();
+            localFile["Nome"] = imovel.Nome;
+            localFile["Valor"] = imovel.Valor.ToString();
+            localFile["Quartos"] = imovel.Quartos.ToString();
             using (var client = new WebClient())
             {
                 client.Credentials = new NetworkCredential(_username, _Password);

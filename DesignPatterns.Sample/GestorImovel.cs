@@ -5,22 +5,14 @@ namespace DesignPatterns.Sample
 {
     public class GestorImovel
     {
-        public string _nomeDoImovel = string.Empty;
-        public decimal _valor = 0M;
-        string _plano = string.Empty;
-        uint _quartos = 1;
-        private string _cartao;
+        private readonly Imovel _imovel = null;
         private readonly IEnumerable<IProvedor> _provedores;
         private readonly IEnumerable<IPlano> _planos;
         private readonly IHttpClient _httpClient;
 
-        public GestorImovel(string nomeDoImovel, decimal valor, uint quartos, string cartao, string plano, IEnumerable<IProvedor> provedores, IEnumerable<IPlano> planos, IHttpClient httpClient)
+        public GestorImovel(Imovel imovel, IEnumerable<IProvedor> provedores, IEnumerable<IPlano> planos, IHttpClient httpClient)
         {
-            _nomeDoImovel = nomeDoImovel;
-            _valor = valor;
-            _plano = plano;
-            _quartos = quartos;
-            _cartao = cartao;
+            _imovel = imovel;
             _provedores = provedores;
             _planos = planos;
             _httpClient = httpClient;
@@ -30,7 +22,7 @@ namespace DesignPatterns.Sample
         {
             foreach (var provedor in _provedores)
             {
-                provedor.Publica(_nomeDoImovel, _valor, _quartos);
+                provedor.Publica(_imovel);
             }
 
         }
@@ -41,10 +33,10 @@ namespace DesignPatterns.Sample
             HttpClient httpClient = new HttpClient();
 
             var valorPlano = _planos
-                .First(p => p.Tipo == _plano)
-                .CalculaValor(qtdDiaria, _valor);
+                .First(p => p.Tipo == _imovel.Plano)
+                .CalculaValor(qtdDiaria, _imovel.Valor);
 
-            _httpClient.Post("gateway-pagamento", new Pagamento(_cartao, valorPlano));
+            _httpClient.Post("gateway-pagamento", new Pagamento(_imovel.Cartao, valorPlano));
 
         }
 
